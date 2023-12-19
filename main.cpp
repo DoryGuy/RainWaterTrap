@@ -15,11 +15,12 @@
 // Solution is O(N) it uses minimal space
 template<class T>
 int getVolume (T const &elevation) {
-    using std::min;
-    
-    int max_left_side(0);
-    int max_right_side(0);
-    int volume(0);
+    if (elevation.empty() ) {
+        return 0;
+    }
+    typename T::value_type  max_left_side(0);
+    typename T::value_type  max_right_side(0);
+    typename T::value_type  volume(0);
     
     auto left_side_iter(elevation.begin());
     auto right_side_iter(elevation.rbegin());
@@ -47,12 +48,11 @@ int getVolume (T const &elevation) {
     return volume;
 }
 
-int main(int argc, const char * argv[]) {
+int main() {
     // insert code here...
     using std::cout;
     using std::endl;
     using std::array;
-    cout << "Hello, World!\n";
     
     array<int, 12> elevation{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     auto volume = getVolume(elevation);
@@ -78,6 +78,26 @@ int main(int argc, const char * argv[]) {
     volume = getVolume(high_plains_elevation);
     cout << "Volume High Plains = " << volume << endl;
     assert(volume == 0);
+    
+    array<int, 0> empty_container{};
+    volume = getVolume(empty_container);
+    cout << "Volume Empty Container = " << volume << endl;
+    assert(volume == 0);
+
+    array<int, 1> one_element_container{1};
+    volume = getVolume(one_element_container);
+    cout << "Volume One element Container = " << volume << endl;
+    assert(volume == 0);
+
+    array<int, 2> two_element_container{1, 1};
+    volume = getVolume(two_element_container);
+    cout << "Volume Two element Container = " << volume << endl;
+    assert(volume == 0);
+    
+    array<int, 3> three_element_container{1, 0, 1};
+    volume = getVolume(three_element_container);
+    cout << "Volume Three element Container = " << volume << endl;
+    assert(volume == 1);
     
     return 0;
 }
