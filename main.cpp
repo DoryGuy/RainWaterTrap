@@ -12,8 +12,19 @@
 
 #include <cassert>
 
+// trying some simple concept code.
+template<typename T>
+concept HasValueType = requires { typename T::value_type; };
+
+template<typename T>
+concept Has_cbegin = requires(T t) {  t.cbegin(); };
+
+template<typename T>
+concept Has_crbegin = requires(T t) { t.crbegin(); };
+
 // Solution is O(N) it uses minimal space
 template<class T>
+requires HasValueType<T> && Has_cbegin<T> && Has_crbegin<T>
 consteval T::value_type getVolume (T const &elevation) {
     if (elevation.empty() ) {
         return 0;
@@ -55,6 +66,9 @@ int main() {
     using std::array;
     
     static constexpr array<int, 12> elevation{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+    // The next line will fail to compile because of not satisfying the concepts for getVolume
+    // static constexpr int elevation[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+    
     auto volume = getVolume(elevation);
     cout << "Volume Original Problem = " << volume << endl;
     assert(volume == 6);

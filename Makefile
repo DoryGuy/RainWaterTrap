@@ -1,9 +1,9 @@
 
-CXX=g++-13
+CXX=g++-14
 CXX_VERSION=c++23
 OPTIMIZE_FLAG=-O3
 DEBUG_FLAG=-g
-WARNING_FLAGS=-Wall -Wextra -Wconversion
+WARNING_FLAGS=-Wall -Wextra -Wconversion -fconcepts-diagnostics-depth=10 
 CXXFLAGS=-std=$(CXX_VERSION) $(OPTIMIZE_FLAG) $(WARNING_FLAGS)
 INCLUDE_DIR=/usr/local/include
 LIB_DIR=/usr/local/lib
